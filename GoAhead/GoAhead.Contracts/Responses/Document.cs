@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoAhead.Service
+namespace GoAhead.Contracts
 {
-    public class HelloResponse
+    public class Document
     {
-        public string Result { get; set; }
+        public string Id { get; set; }
+        public string Value { get; set; }
     }
 }
