@@ -10,11 +10,11 @@ client = MongoClient('localhost', 27017)
 db = client['SN']
 
 # Lists with ids
-users_ids= ["user_" + str(i) for i in range(10000)]
-images_ids = ["image_" + str(i) for i in range(10000)]
-places_ids = ["place_" + str(i) for i in range(10000)]
-comments_ids = ["comment_" + str(i) for i in range(10000)]
-tags_ids = ["tag_" + str(i) for i in range(10000)]
+users_ids= ["user_" + str(i) for i in range(100)]
+images_ids = ["image_" + str(i) for i in range(100)]
+places_ids = ["place_" + str(i) for i in range(100)]
+comments_ids = ["comment_" + str(i) for i in range(100)]
+tags_ids = ["tag_" + str(i) for i in range(100)]
 
 # Remove all documents from collections
 db.users.remove()
@@ -40,7 +40,7 @@ def task1():
         comments = random.sample(comments_ids,random.randint(0,10))
         images = random.sample(images_ids,random.randint(0,10))
         
-        user = {"_id": id, "name": name, "friends": friends, "images": images, "places": places}
+        user = {"alias": id, "name": name, "friends": friends, "images": images, "places": places}
         users_collection.insert_one(user)
     print("Task 1 finished")
     
@@ -53,7 +53,7 @@ def task2():
         replies = random.sample(comments_ids,random.randint(0,10))
         user_id = users_ids[random.randint(0,len(users_ids)-1)]
         
-        comment = {"_id": id, "user": user_id, "text": text, "tags": tags, "replies": replies}
+        comment = {"alias": id, "user": user_id, "text": text, "tags": tags, "replies": replies}
         comments_collection.insert_one(comment)
     print("Task 2 finished")  
   
@@ -66,7 +66,7 @@ def task3():
         comments = random.sample(comments_ids,random.randint(0,10))
         likedBy = random.sample(users_ids,random.randint(0,10))
         
-        image = {"_id": id, "description": description, "tags": tags, "comments": comments, "likedBy": likedBy}
+        image = {"alias": id, "description": description, "tags": tags, "comments": comments, "likedBy": likedBy}
         images_collection.insert_one(image)
     print("Task 3 finished")
  
@@ -77,7 +77,7 @@ def task4():
         name = "Moscow " + str(i)
         likedBy = random.sample(users_ids,random.randint(0,10))
         
-        place = {"_id": id, "name": name, "likedBy": likedBy}
+        place = {"alias": id, "name": name, "likedBy": likedBy}
         places_collection.insert_one(place)
     print("Task 4 finished")
     
@@ -88,7 +88,7 @@ def task5():
         text = "#hashtag " + str(i)
         taggedBy = random.sample(users_ids,random.randint(0,10))
         
-        tag = {"_id": id, "text": text, "taggedBy": taggedBy}
+        tag = {"alias": id, "text": text, "taggedBy": taggedBy}
         tags_collection.insert_one(tag)
     print("Task 5 finished")
  
