@@ -1,0 +1,53 @@
+﻿
+.wrapper {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+h1 {
+    text-align: center;
+}
+
+h5 {
+    text-align: center;
+}
+
+.ui-state-default {
+    background-color: #5BC0DE;
+    background-image: linear-gradient(to bottom, #5BC0DE 0%, #2AABD2 100%);
+    color: white;
+}
+
+    .ui-state-default a {
+        color: white;
+    }
+
+.ui-state-hover {
+    background-color: #2AABD2;
+    background-image: none;
+    color: black;
+}
+
+    .ui-state-default a {
+        color: white !important;
+    }
+
+.ui-state-active {
+    background-color: #FFF !important; 
+    background-image: none;
+    color: black;
+}
+
+    .ui-state-active.ui-state-default.ui-state-hover a {
+        color: black !important;
+    }
+
+    .ui-state-active.ui-state-default a {
+        color: black !important;
+    }

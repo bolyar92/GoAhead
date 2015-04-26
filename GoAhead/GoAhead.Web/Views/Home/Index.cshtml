@@ -3,7 +3,119 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<center>
-    <h1>Go Ahead!</h1>
-    <h5>"documents and "easy" are now used in one sentence</h5>
-</center>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="~/Content/jquery.fullPage.css" rel="stylesheet" />
+<link href="~/Content/main.css" rel="stylesheet" />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.fullPage.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+    jsonType2 = [{
+            "document": "a",
+            "id": "user_1"
+        }, {
+            "document": "a",
+            "id": "user_2"
+        }, {
+            "document": "b",
+            "id": "order_2"
+        }];
+        //{ a: ['user_1'], b: ['order_1', 'order_2'] };
+
+    function output(str) {
+        $("#json pre").html(str);
+    }
+
+    function syntaxHighlight(json) {
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+
+    function textchg(str) {
+        $('#ddText').html(str);
+    }
+
+    $(document).ready(function () {
+        var obj = jsonType2;
+        var str = JSON.stringify(obj, undefined, 4);
+        output(syntaxHighlight(str));
+        var departmentlist = new Array();
+        $.each(jsonType2, function (i, contact) {
+            if (contact.document != null && $('#' + contact.document).length == 0) {
+                $('#accordion').append('<h3 id=' + contact.document + '><a href="#">' + contact.document + '</a></h3>');
+                departmentlist.push(contact.document);
+            }
+            //insert contacts in the accordion
+            $('#' + contact.document).after('<p><a href="' + contact.id + '">' + contact.id + '</a></p>');
+        });
+        $.each(departmentlist, function (i, list) {
+            $("#" + list).nextUntil("h3").wrapAll("<div></div>");
+        });
+        $("#accordion").accordion();
+        $('#fullpage').fullpage({
+            sectionsColor: ['#EEE', '#FFF']
+        });
+    });
+</script>
+<div id="fullpage">
+    <div class="section">
+        <div class="jumbotron">
+            <h1>Go Ahead!</h1>
+            <h5>'DOCUMENTS' and 'EASY' are now used in one sentence</h5>
+        </div>
+    </div>
+    <div class="section">
+        <div class="wrapper">
+            <div>
+                <div class="col-lg-8" style="padding-bottom:15px;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for Id">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button">Search</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="width:100%">
+                            <span id="ddText">Collections</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('Users')">Users</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('Tax')">Tax</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="json-holder col-lg-8" id="json">
+                    <pre>
+                    </pre>
+                </div>
+                <div class="links-holder col-lg-4" id="links">
+                    <div id="contactlist">
+                        <div id="accordion">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
