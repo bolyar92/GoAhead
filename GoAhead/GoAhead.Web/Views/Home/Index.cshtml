@@ -47,22 +47,31 @@
         $.get(url, function (data) {
             jsonType2 = data;
             loadData();
-        })
+        }).fail(function () {
+            $('#ddCollections').html('');
+            $('#accordion').html('');
+        });
     }
 
     $(document).ready(function () {
         $('h1').css("font-size", $(document).height()/5 + "px");
         $('h5').css("font-size", $(document).height()/25 + "px");
 
-        $.get("/api/documents/1?format=json&collection=users", function (data) {
+        $.get("/api/documents/user_1?format=json&collection=users", function (data) {
             jsonType2 = data;
             loadData();
-        });
+        }).fail(function () {
+            $('#ddCollections').html('');
+            $('#accordion').html('');
+        });;
 
         getCollections();
         $('#fullpage').fullpage({
             sectionsColor: ['#EEE', '#FFF']
-        });
+        }).fail(function () {
+            $('#ddCollections').html('');
+            $('#accordion').html('');
+        });;
     });
 
     function getCollections() {
@@ -72,7 +81,10 @@
             coll.forEach(function (element, index, array) {
                 $('#ddCollections').append("<li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\" onclick=\"textchg('" + element + "')\">" + element + "</a></li>")
             })
-        })
+        }).fail(function () {
+            $('#ddCollections').html('');
+            $('#accordion').html('');
+        });
     }
 
     function render(collection, id) {
@@ -81,6 +93,9 @@
         $.get("/api/documents/" + id + "?format=json&collection=" + collection, function (data) {
             jsonType2 = data;
             loadData(true);
+        }).fail(function () {
+            $('#ddCollections').html('');
+            $('#accordion').html('');
         });
     }
 
