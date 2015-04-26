@@ -18,10 +18,12 @@ namespace GoAhead.Service
         // TOOD: add error handling
 
         private readonly IDocumentsManager documentsManager;
+        private readonly IDocumentsConfigProvider documentsConfigProvider;
 
-        public DocumentsService(IDocumentsManager documentsManager)
+        public DocumentsService(IDocumentsManager documentsManager, IDocumentsConfigProvider documentsConfigProvider)
         {
             this.documentsManager = documentsManager;
+            this.documentsConfigProvider = documentsConfigProvider;
         }
 
         public Document Get(GetDocumentRequest request)
@@ -32,6 +34,15 @@ namespace GoAhead.Service
         public List<Reference> Get(GetReferencesRequest request)
         {
             return this.documentsManager.GetReferences(request).ToList();
+        }
+
+        public string[] Get(GetCollectionsRequest request)
+        {
+            return this.documentsConfigProvider
+                .ReadConfiguration()
+                .Documents
+                .Select(d => d.Collection)
+                .ToArray();
         }
     }
 }

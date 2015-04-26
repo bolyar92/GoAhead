@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="DocumentsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\GetCollectionsRequest.cs" />
     <Compile Include="Requests\GetDocumentRequest.cs" />
     <Compile Include="Requests\GetReferencesRequest.cs" />
     <Compile Include="ServiceHost.cs" />

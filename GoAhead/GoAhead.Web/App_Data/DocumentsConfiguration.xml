@@ -3,37 +3,37 @@
   <documents>
     <document collection="users">
       <referringTo>
-        <reference type="users" relation="many" primaryKey="friends" />
-        <reference type="images" relation="many" primaryKey="images" />
-        <reference type="places" relation="many" primaryKey="places" />
+        <reference collection="users" relation="many" primaryKey="friends" />
+        <reference collection="images" relation="many" primaryKey="images" />
+        <reference collection="places" relation="many" primaryKey="places" />
       </referringTo>
     </document>
 
     <document collection="images">
       <referringTo>
-        <reference type="users" relation="many" primaryKey="likes" />
-        <reference type="comments" relation="many" primaryKey="comments" />
-        <reference type="tags" relation="many" primaryKey="tags" />
+        <reference collection="users" relation="many" primaryKey="likes" />
+        <reference collection="comments" relation="many" primaryKey="comments" />
+        <reference collection="tags" relation="many" primaryKey="tags" />
       </referringTo>
     </document>
 
     <document collection="comments">
       <referringTo>
-        <reference type="users" relation="single" primaryKey="user" />
-        <reference type="comments" relation="many" primaryKey="replies" />
-        <reference type="tags" relation="many" primaryKey="tags" />
+        <reference collection="users" relation="single" primaryKey="user" />
+        <reference collection="comments" relation="many" primaryKey="replies" />
+        <reference collection="tags" relation="many" primaryKey="tags" />
       </referringTo>
     </document>
 
     <document collection="places">
       <referringTo>
-        <reference type="users" relation="many" primaryKey="likedBy" />
+        <reference collection="users" relation="many" primaryKey="likedBy" />
       </referringTo>
     </document>
 
     <document collection="tags">
       <referringTo>
-        <reference type="users" relation="many" primaryKey="taggedBy" />
+        <reference collection="users" relation="many" primaryKey="taggedBy" />
       </referringTo>
     </document>
   </documents>
