@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoAhead.Contracts
 {
-    public class Reference
+    public class GetCollections
     {
-        public string Document { get; set; }
-        public string Id { get; set; }
-        public string Collection { get; set; }
     }
 }

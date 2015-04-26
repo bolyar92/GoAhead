@@ -27,8 +27,8 @@ namespace GoAhead.Core.Configuration
 
     public class Reference
     {
-        [XmlAttribute("type")]
-        public string Type { get; set; }
+        [XmlAttribute("collection")]
+        public string Collection { get; set; }
 
         [XmlAttribute("relation")]
         public string Relation { get; set; }

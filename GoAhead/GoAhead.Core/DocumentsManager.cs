@@ -45,6 +45,7 @@ namespace GoAhead.Core
                         {
                             Document = reference.PrimaryKey,
                             Id = item,
+                            Collection = reference.Collection,
                         });
                     }
                 }
@@ -57,6 +58,7 @@ namespace GoAhead.Core
                     {
                         Document = reference.PrimaryKey,
                         Id = id,
+                        Collection = reference.Collection
                     });
                 }
             }
