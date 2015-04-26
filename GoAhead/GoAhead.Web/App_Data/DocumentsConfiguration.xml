@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <documentsConfiguration>
   <documents>
-    <document type="user">
+    <document collection="users">
       <referringTo>
-        <reference type="user" relation="many" primaryKey="user_{friends}" />
-        <reference type="image" relation="many" primaryKey="image_{image}" />
-        <reference type="places" relation="many" primaryKey="place_{places}" />
+        <reference type="users" relation="many" primaryKey="friends" />
+        <reference type="images" relation="many" primaryKey="images" />
+        <reference type="places" relation="many" primaryKey="places" />
       </referringTo>
     </document>
 
-    <document type="image">
+    <document collection="images">
       <referringTo>
-        <reference type="user" relation="many" primaryKey="user_{likes}" />
-        <reference type="comment" relation="many" primaryKey="comment_{comments}" />
-        <reference type="tags" relation="many" primaryKey="tag_{tags}" />
+        <reference type="users" relation="many" primaryKey="likes" />
+        <reference type="comments" relation="many" primaryKey="comments" />
+        <reference type="tags" relation="many" primaryKey="tags" />
       </referringTo>
     </document>
 
-    <document type="comment">
+    <document collection="comments">
       <referringTo>
-        <reference type="user" relation="single" primaryKey="user_{user}" />
-        <reference type="comment" relation="many" primaryKey="replay_{replies}" />
-        <reference type="tags" relation="many" primaryKey="tag_{tags}" />
+        <reference type="users" relation="single" primaryKey="user" />
+        <reference type="comments" relation="many" primaryKey="replies" />
+        <reference type="tags" relation="many" primaryKey="tags" />
       </referringTo>
     </document>
 
-    <document type="place">
+    <document collection="places">
       <referringTo>
-        <reference type="user" relation="many" primaryKey="user_{likedBy}" />
+        <reference type="users" relation="many" primaryKey="likedBy" />
       </referringTo>
     </document>
 
-    <document type="tag">
+    <document collection="tags">
       <referringTo>
-        <reference type="user" relation="many" primaryKey="user_{taggedBy}" />
+        <reference type="users" relation="many" primaryKey="taggedBy" />
       </referringTo>
     </document>
   </documents>

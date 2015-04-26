@@ -9,5 +9,6 @@ namespace GoAhead.Contracts
     public class GetDocument
     {
         public string Id { get; set; }
+        public string Collection { get; set; }
     }
 }

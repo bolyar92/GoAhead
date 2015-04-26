@@ -9,6 +9,12 @@ namespace GoAhead.Contracts
     public class Document
     {
         public string Id { get; set; }
-        public string Value { get; set; }
+        public string RawJsonValue { get; set; }
+        public List<Reference> References { get; set; }
+
+        public Document()
+        {
+            this.References = new List<Reference>();
+        }
     }
 }

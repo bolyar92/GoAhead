@@ -17,8 +17,8 @@ namespace GoAhead.Core.Configuration
 
     public class Document
     {
-        [XmlAttribute("type")]
-        public string Type { get; set; }
+        [XmlAttribute("collection")]
+        public string Collection { get; set; }
 
         [XmlArray("referringTo")]
         [XmlArrayItem("reference")]

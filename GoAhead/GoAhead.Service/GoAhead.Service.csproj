@@ -76,10 +76,12 @@
       <Project>{75639511-5093-4001-bb0d-d87a09df64c5}</Project>
       <Name>GoAhead.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GoAhead.Data\GoAhead.Data.csproj">
+      <Project>{bfc37b54-f210-4f2b-bc80-f50f4d11ad68}</Project>
+      <Name>GoAhead.Data</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Responses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

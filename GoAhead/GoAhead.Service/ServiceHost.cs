@@ -1,6 +1,8 @@
 ﻿using GoAhead.Core;
 using GoAhead.Core.Configuration;
+using GoAhead.Data;
 using ServiceStack;
+using ServiceStack.Text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,19 +25,23 @@ namespace GoAhead.Service
             }
         }
 
-        public ServiceHost() : base("Documents Web Services", typeof(DocumentsService).Assembly) 
-        { 
+        public ServiceHost()
+            : base("Documents Web Services", typeof(DocumentsService).Assembly)
+        {
         }
 
         public override void Configure(Funq.Container container)
         {
             SetConfig(new HostConfig { HandlerFactoryPath = "api" });
 
-            container.RegisterAutoWiredAs<DummyDocumentsManager, IDocumentsManager>()
-                .ReusedWithin(Funq.ReuseScope.Request);
+            JsConfig.EmitLowercaseUnderscoreNames = true;
+
             container.Register<IDocumentsConfigProvider>(c => new DocumentsConfigProvider(this.ConfigurationPath))
                 .ReusedWithin(Funq.ReuseScope.Request);
-
+            container.RegisterAutoWiredAs<MongoDataProvider, IDataProvider>()
+                .ReusedWithin(Funq.ReuseScope.Request);
+            container.RegisterAutoWiredAs<DocumentsManager, IDocumentsManager>()
+                .ReusedWithin(Funq.ReuseScope.Request);
         }
     }
 }
