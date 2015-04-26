@@ -48,7 +48,7 @@
             jsonType2 = data;
             loadData();
         }).fail(function () {
-            $('#ddCollections').html('');
+            $("#json pre").html('');
             $('#accordion').html('');
         });
     }
@@ -61,7 +61,7 @@
             jsonType2 = data;
             loadData();
         }).fail(function () {
-            $('#ddCollections').html('');
+            $("#json pre").html('');
             $('#accordion').html('');
         });
 
@@ -79,7 +79,7 @@
                 $('#ddCollections').append("<li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\" onclick=\"textchg('" + element + "')\">" + element + "</a></li>")
             })
         }).fail(function () {
-            $('#ddCollections').html('');
+            $("#json pre").html('');
             $('#accordion').html('');
         });
     }
@@ -91,7 +91,7 @@
             jsonType2 = data;
             loadData(true);
         }).fail(function () {
-            $('#ddCollections').html('');
+            $("#json pre").html('');
             $('#accordion').html('');
         });
     }
