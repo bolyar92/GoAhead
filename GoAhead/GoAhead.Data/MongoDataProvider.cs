@@ -27,8 +27,9 @@ namespace GoAhead.Data
 
                 IMongoCollection<BsonDocument> dbCollection = db.GetCollection<BsonDocument>(collection);
 
+                // WE SHOULD USE THE _id NOT THE ALIAS
                 var bsonDocument = new BsonDocument();
-                bsonDocument.Add("_id", new BsonObjectId(documentId));
+                bsonDocument.Add("alias", new BsonString(documentId));
                 //bsonDocument.Add("_id", new BsonObjectId(new ObjectId(documentId)));
 
                 var queryDocument = new QueryDocument(bsonDocument);
@@ -37,9 +38,10 @@ namespace GoAhead.Data
 
                 if (jsonDocument != null && jsonDocument.Result != null)
                 {
-                    return jsonDocument.Result.ToString();
-                }
+                    jsonDocument.Result.Remove("_id");
 
+                    return jsonDocument.Result.ToJson<BsonDocument>();
+                }
             }
             catch
             {

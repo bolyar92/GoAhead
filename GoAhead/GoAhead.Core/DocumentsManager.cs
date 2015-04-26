@@ -33,10 +33,16 @@ namespace GoAhead.Core
             result.RawJsonValue = dataProvider.GetDocument(documentInfo.Collection, documentInfo.Id);
             var document = JsonConvert.DeserializeObject<Dictionary<string, object>>(result.RawJsonValue);
 
+            if(document == null)
+            {
+                return null;
+            }
+           
+
             foreach (Configuration.Reference reference in configDoc.ReferringTo)
             {
                 // TODO: use enum
-                if (reference.Relation == "many")
+                if (reference.Relation == "many" && document.ContainsKey(reference.PrimaryKey))
                 {
                     string rawIds = document[reference.PrimaryKey].ToString();
                     foreach (string item in JsonConvert.DeserializeObject<string[]>(rawIds))
@@ -51,7 +57,7 @@ namespace GoAhead.Core
                 }
 
                 // TODO: use enum
-                if(reference.Relation == "single")
+                else if (reference.Relation == "single" && document.ContainsKey(reference.PrimaryKey))
                 {
                     string id = document[reference.PrimaryKey].ToString();
                     result.References.Add(new Reference()
