@@ -11,7 +11,7 @@
 <script src="~/Scripts/jquery.fullPage.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
 <script>
-    jsonType2 = $.get("/api/documents/1?format=json&collection=users");
+    var jsonType2;
 
     function output(str) {
         $("#json pre").html(str);
@@ -44,45 +44,74 @@
         var docId = $("#docId").val();
         var collection = $("#ddText").text();
         var url = "/api/documents/" + docId + "?format=json&collection=" + collection;
-        var json = $.get(url, function (data) {
+        $.get(url, function (data) {
             jsonType2 = data;
             loadData();
         })
     }
 
     $(document).ready(function () {
-        loadData();
+        $('h1').css("font-size", $(document).height()/5 + "px");
+        $('h5').css("font-size", $(document).height()/25 + "px");
 
+        $.get("/api/documents/1?format=json&collection=users", function (data) {
+            jsonType2 = data;
+            loadData();
+        });
+
+        getCollections();
         $('#fullpage').fullpage({
             sectionsColor: ['#EEE', '#FFF']
         });
     });
 
-    function loadData() {
+    function getCollections() {
+        var coll = [];
+        $.get("/api/collections?format=json", function (data) {
+            coll = data;
+            coll.forEach(function (element, index, array) {
+                $('#ddCollections').append("<li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\" onclick=\"textchg('" + element + "')\">" + element + "</a></li>")
+            })
+        })
+    }
+
+    function render(collection, id) {
+        $('#ddText').html(collection);
+        $('#docId').val(id);
+        $.get("/api/documents/" + id + "?format=json&collection=" + collection, function (data) {
+            jsonType2 = data;
+            loadData(true);
+        });
+    }
+
+    function loadData(destroy) {
         var json = jsonType2.raw_json_value;
         var obj = JSON.parse(jsonType2.raw_json_value);
         var str = JSON.stringify(obj, undefined, 4);
         output(syntaxHighlight(str));
         var departmentlist = new Array();
+        if (destroy)
+        {
+            $('#accordion').accordion("destroy");
+        }
+        $('#accordion').html('');
         $.each(jsonType2.references, function (i, contact) {
             if (contact.document != null && $('#' + contact.document).length == 0) {
                 $('#accordion').append('<h3 id=' + contact.document + '><a href="#">' + contact.document + '</a></h3>');
                 departmentlist.push(contact.document);
             }
-            $('#' + contact.document).after('<p><a href="' + contact.id + '">' + contact.id + '</a></p>');
+            $('#' + contact.document).after('<p><a href="#" onclick="render(\'' + contact.collection + '\',\'' + contact.id + '\')">' + contact.id + '</a></p>');
         });
         $.each(departmentlist, function (i, list) {
             $("#" + list).nextUntil("h3").wrapAll("<div></div>");
         });
-        $("#accordion").accordion();
+        $('#accordion').accordion();
     }
 </script>
 <div id="fullpage">
     <div class="section">
-        <div class="jumbotron">
-            <h1>Go Ahead!</h1>
-            <h5>'DOCUMENTS' and 'EASY' are now used in one sentence</h5>
-        </div>
+        <h1>Go Ahead!</h1>
+        <h5>'DOCUMENTS' and 'EASY' are now used in one sentence</h5>
     </div>
     <div class="section">
         <div class="wrapper">
@@ -101,9 +130,9 @@
                             <span id="ddText">users</span>
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="ddCollections">
+                            @*<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>*@
                         </ul>
                     </div>
                 </div>
