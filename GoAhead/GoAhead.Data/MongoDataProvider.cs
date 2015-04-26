@@ -1,28 +1,52 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GoAhead.Data
 {
     public class MongoDataProvider : IDataProvider
     {
-        public MongoDataProvider()
-        {
-
-        }
-
         public string GetDocument(string collection, string documentId)
         {
-            //MongoClient mongoDriver = new MongoClient("http://localhost:27017/");
+            if (string.IsNullOrWhiteSpace(collection) || string.IsNullOrWhiteSpace(documentId))
+            {
+                return string.Empty;
+            }
 
-            //IMongoDatabase db = mongoDriver.GetDatabase("SN");
-            ////db.GetCollection<string>("dasda").Find(new FilterDefinition<string>())
+            try
+            {
 
+                MongoClient mongoClient = new MongoClient();
+                IMongoDatabase db = mongoClient.GetDatabase("SN");
 
-            return "{\"_id\":\"user_0\",\"friends\":[\"user_71\",\"user_59\",\"user_5\",\"user_98\",\"user_38\",\"user_89\",\"user_94\",\"user_97\"],\"images\":[],\"name\":\"Username 0\",\"places\":[]}";
+                IMongoCollection<BsonDocument> dbCollection = db.GetCollection<BsonDocument>(collection);
+
+                var bsonDocument = new BsonDocument();
+                bsonDocument.Add("_id", new BsonObjectId(documentId));
+                //bsonDocument.Add("_id", new BsonObjectId(new ObjectId(documentId)));
+
+                var queryDocument = new QueryDocument(bsonDocument);
+                IFindFluent<BsonDocument, BsonDocument> result = dbCollection.Find(queryDocument);
+                var jsonDocument = result.FirstOrDefaultAsync();
+
+                if (jsonDocument != null && jsonDocument.Result != null)
+                {
+                    return jsonDocument.Result.ToString();
+                }
+
+            }
+            catch
+            {
+            }
+
+            return string.Empty;
         }
+
     }
 }
