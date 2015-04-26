@@ -28,7 +28,14 @@ namespace GoAhead.Service
 
         public Document Get(GetDocumentRequest request)
         {
-            return this.documentsManager.GetDocument(request);
+            Document document = this.documentsManager.GetDocument(request);
+
+            if (document == null)
+            {
+                throw HttpError.NotFound("");
+            }
+
+            return document;
         }
 
         public List<Reference> Get(GetReferencesRequest request)
