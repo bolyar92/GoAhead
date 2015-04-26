@@ -11,17 +11,7 @@
 <script src="~/Scripts/jquery.fullPage.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
 <script>
-    jsonType2 = [{
-            "document": "a",
-            "id": "user_1"
-        }, {
-            "document": "a",
-            "id": "user_2"
-        }, {
-            "document": "b",
-            "id": "order_2"
-        }];
-        //{ a: ['user_1'], b: ['order_1', 'order_2'] };
+    jsonType2 = $.get("/api/documents/1?format=json&collection=users");
 
     function output(str) {
         $("#json pre").html(str);
@@ -50,27 +40,42 @@
         $('#ddText').html(str);
     }
 
+    function loadDoc() {
+        var docId = $("#docId").val();
+        var collection = $("#ddText").text();
+        var url = "/api/documents/" + docId + "?format=json&collection=" + collection;
+        var json = $.get(url, function (data) {
+            jsonType2 = data;
+            loadData();
+        })
+    }
+
     $(document).ready(function () {
-        var obj = jsonType2;
+        loadData();
+
+        $('#fullpage').fullpage({
+            sectionsColor: ['#EEE', '#FFF']
+        });
+    });
+
+    function loadData() {
+        var json = jsonType2.raw_json_value;
+        var obj = JSON.parse(jsonType2.raw_json_value);
         var str = JSON.stringify(obj, undefined, 4);
         output(syntaxHighlight(str));
         var departmentlist = new Array();
-        $.each(jsonType2, function (i, contact) {
+        $.each(jsonType2.references, function (i, contact) {
             if (contact.document != null && $('#' + contact.document).length == 0) {
                 $('#accordion').append('<h3 id=' + contact.document + '><a href="#">' + contact.document + '</a></h3>');
                 departmentlist.push(contact.document);
             }
-            //insert contacts in the accordion
             $('#' + contact.document).after('<p><a href="' + contact.id + '">' + contact.id + '</a></p>');
         });
         $.each(departmentlist, function (i, list) {
             $("#" + list).nextUntil("h3").wrapAll("<div></div>");
         });
         $("#accordion").accordion();
-        $('#fullpage').fullpage({
-            sectionsColor: ['#EEE', '#FFF']
-        });
-    });
+    }
 </script>
 <div id="fullpage">
     <div class="section">
@@ -84,21 +89,21 @@
             <div>
                 <div class="col-lg-8" style="padding-bottom:15px;">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for Id">
+                        <input type="text" class="form-control" placeholder="Search for Id" id="docId">
                         <span class="input-group-btn">
-                            <button class="btn btn-info" type="button">Search</button>
+                            <button class="btn btn-info" type="button" onclick="loadDoc()">Search</button>
                         </span>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="dropdown">
                         <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="width:100%">
-                            <span id="ddText">Collections</span>
+                            <span id="ddText">users</span>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('Users')">Users</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('Tax')">Tax</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="textchg('users')">users</a></li>
                         </ul>
                     </div>
                 </div>
@@ -111,7 +116,6 @@
                 <div class="links-holder col-lg-4" id="links">
                     <div id="contactlist">
                         <div id="accordion">
-
                         </div>
                     </div>
                 </div>
