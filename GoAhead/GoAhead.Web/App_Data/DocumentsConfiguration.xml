@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<documentsConfiguration>
+  <documents>
+    <document type="user">
+      <referringTo>
+        <reference type="user" relation="many" primaryKey="user_{friends}" />
+        <reference type="image" relation="many" primaryKey="image_{image}" />
+        <reference type="places" relation="many" primaryKey="place_{places}" />
+      </referringTo>
+    </document>
+
+    <document type="image">
+      <referringTo>
+        <reference type="user" relation="many" primaryKey="user_{likes}" />
+        <reference type="comment" relation="many" primaryKey="comment_{comments}" />
+        <reference type="tags" relation="many" primaryKey="tag_{tags}" />
+      </referringTo>
+    </document>
+
+    <document type="comment">
+      <referringTo>
+        <reference type="user" relation="single" primaryKey="user_{user}" />
+        <reference type="comment" relation="many" primaryKey="replay_{replies}" />
+        <reference type="tags" relation="many" primaryKey="tag_{tags}" />
+      </referringTo>
+    </document>
+
+    <document type="place">
+      <referringTo>
+        <reference type="user" relation="many" primaryKey="user_{likedBy}" />
+      </referringTo>
+    </document>
+
+    <document type="tag">
+      <referringTo>
+        <reference type="user" relation="many" primaryKey="user_{taggedBy}" />
+      </referringTo>
+    </document>
+  </documents>
+</documentsConfiguration>

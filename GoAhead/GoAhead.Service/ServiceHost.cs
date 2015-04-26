@@ -1,16 +1,31 @@
 ﻿using GoAhead.Core;
+using GoAhead.Core.Configuration;
 using ServiceStack;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 
 namespace GoAhead.Service
 {
     public class ServiceHost : AppHostBase
     {
-        public ServiceHost() : base("Documents Web Services", typeof(DocumentsService).Assembly) { }
+        private string ConfigurationPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DocumentsConfigPath"];
+            }
+        }
+
+        public ServiceHost() : base("Documents Web Services", typeof(DocumentsService).Assembly) 
+        { 
+        }
 
         public override void Configure(Funq.Container container)
         {
@@ -18,6 +33,9 @@ namespace GoAhead.Service
 
             container.RegisterAutoWiredAs<DummyDocumentsManager, IDocumentsManager>()
                 .ReusedWithin(Funq.ReuseScope.Request);
+            container.Register<IDocumentsConfigProvider>(c => new DocumentsConfigProvider(this.ConfigurationPath))
+                .ReusedWithin(Funq.ReuseScope.Request);
+
         }
     }
 }

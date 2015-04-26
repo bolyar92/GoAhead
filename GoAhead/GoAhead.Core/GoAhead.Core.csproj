@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DocumentsConfiguration.cs" />
+    <Compile Include="Configuration\DocumentsConfigProvider.cs" />
     <Compile Include="DummyDocumentsManager.cs" />
+    <Compile Include="Configuration\IDocumentsConfigProvider.cs" />
     <Compile Include="IDocumentsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
