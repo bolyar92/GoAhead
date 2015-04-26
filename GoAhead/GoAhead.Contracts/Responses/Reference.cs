@@ -8,7 +8,7 @@ namespace GoAhead.Contracts
 {
     public class Reference
     {
-        public string DocumentName { get; set; }
-        public string DocumentUrl { get; set; }
+        public string Document { get; set; }
+        public string Id { get; set; }
     }
 }

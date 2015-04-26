@@ -37,7 +37,7 @@ namespace GoAhead.Core
             return new Document()
             {
                 Id = documentInfo.Id,
-                Value = Documents.ContainsKey(documentInfo.Id) ? Documents[documentInfo.Id] : null,
+                RawJsonValue = Documents.ContainsKey(documentInfo.Id) ? Documents[documentInfo.Id] : null,
             };
         }
 
@@ -46,7 +46,7 @@ namespace GoAhead.Core
             return !References.ContainsKey(referencesInfo.ForDocumentId) ?
                 Enumerable.Empty<Reference>() :
                 (References[referencesInfo.ForDocumentId] ?? new string[] { })
-                    .Select(r => new Reference() { DocumentName = r, DocumentUrl = "/api/documents/" + r });
+                    .Select(r => new Reference() { Document = r, Id = "/api/documents/" + r });
 
         }
     }

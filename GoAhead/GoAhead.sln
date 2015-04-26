@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoAhead.Contracts", "GoAhea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoAhead.Core", "GoAhead.Core\GoAhead.Core.csproj", "{75639511-5093-4001-BB0D-D87A09DF64C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoAhead.Data", "GoAhead.Data\GoAhead.Data.csproj", "{BFC37B54-F210-4F2B-BC80-F50F4D11AD68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{75639511-5093-4001-BB0D-D87A09DF64C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75639511-5093-4001-BB0D-D87A09DF64C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75639511-5093-4001-BB0D-D87A09DF64C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC37B54-F210-4F2B-BC80-F50F4D11AD68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC37B54-F210-4F2B-BC80-F50F4D11AD68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC37B54-F210-4F2B-BC80-F50F4D11AD68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC37B54-F210-4F2B-BC80-F50F4D11AD68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
