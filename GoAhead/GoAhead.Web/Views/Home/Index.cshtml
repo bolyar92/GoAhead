@@ -63,15 +63,12 @@
         }).fail(function () {
             $('#ddCollections').html('');
             $('#accordion').html('');
-        });;
+        });
 
         getCollections();
         $('#fullpage').fullpage({
             sectionsColor: ['#EEE', '#FFF']
-        }).fail(function () {
-            $('#ddCollections').html('');
-            $('#accordion').html('');
-        });;
+        });
     });
 
     function getCollections() {
